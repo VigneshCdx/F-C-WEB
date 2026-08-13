@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Freshers' Companion — Feel Informed, Connected & Confident</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .glass { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); }
+    .card-hover { transition: all 0.25s ease; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -12px rgba(37,99,235,0.2); }
+    .fade-in { animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .badge-pop { animation: badgePop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes badgePop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #93c5fd; border-radius: 3px; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+  <!-- ========== NAV ========== -->
+  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 glass border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2 cursor-pointer" onclick="showPage('home')">
+        <div class="w-9 h-9 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-brand-600/30">FC</div>
+        <span class="font-bold text-lg tracking-tight hidden sm:block">Freshers' Companion</span>
+      </div>
+      <div class="hidden md:flex items-center gap-1">
+        <button onclick="showPage('home')" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-brand-50 transition">Home</button>
+        <button onclick="showPage('dashboard')" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-brand-50 transition">Dashboard</button>
+        <button onclick="showPage('mentors')" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-brand-50 transition">Mentors</button>
+        <button onclick="showPage('campus')" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-brand-50 transition">Campus Hub</button>
+        <button onclick="showPage('learn')" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-brand-50 transition">Learn</button>
+        <button onclick="showPage('community')" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-brand-50 transition">Community</button>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="showPage('dashboard')" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-brand-600 text-white text-sm font-semibold rounded-xl hover:bg-brand-700 transition shadow-md shadow-brand-600/25">
+          Open App
+        </button>
+        <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-slate-100" onclick="toggleMobileMenu()">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-1">
+      <button onclick="showPage('home');toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium">Home</button>
+      <button onclick="showPage('dashboard');toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium">Dashboard</button>
+      <button onclick="showPage('mentors');toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium">Mentors</button>
+      <button onclick="showPage('campus');toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium">Campus Hub</button>
+      <button onclick="showPage('learn');toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium">Learn</button>
+      <button onclick="showPage('community');toggleMobileMenu()" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium">Community</button>
+    </div>
+  </nav>
+
+  <main class="pt-16 min-h-screen">
+
+    <!-- ===== HOME ===== -->
+    <section id="page-home" class="page fade-in">
+      <div class="relative overflow-hidden bg-gradient-to-br from-brand-600 via-brand-700 to-brand-900 text-white">
+        <div class="absolute inset-0 opacity-20">
+          <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-brand-400 blur-3xl"></div>
+          <div class="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-blue-400 blur-3xl"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 md:py-28">
+          <div class="max-w-3xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-sm font-medium mb-6 backdrop-blur">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Innovation & Solution Track
+            </div>
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight mb-6">
+              Feel informed, connected<br class="hidden sm:block"/> & confident from day one.
+            </h1>
+            <p class="text-lg sm:text-xl text-brand-100 mb-8 max-w-2xl leading-relaxed">
+              Freshers' Companion is your personal campus guide — essential info, smart mentorship matching, and personalized support so every first-year thrives.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <button onclick="showPage('dashboard')" class="px-6 py-3.5 bg-white text-brand-700 font-bold rounded-xl hover:bg-brand-50 transition shadow-xl shadow-black/10">
+                Launch Dashboard →
+              </button>
+              <button onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})" class="px-6 py-3.5 border-2 border-white/40 text-white font-semibold rounded-xl hover:bg-white/10 transition">
+                Explore Features
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+        <div class="text-center mb-12">
+          <p class="text-brand-600 font-semibold text-sm tracking-wider uppercase mb-2">The Problem</p>
+          <h2 class="text-3xl font-bold text-slate-900">The Freshers' Struggle</h2>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm card-hover">
+            <div class="w-12 h-12 rounded-xl bg-red-50 text-red-500 flex items-center justify-center text-2xl mb-4">📚</div>
+            <h3 class="font-bold text-lg mb-2">Information Overload</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">Scattered PDFs, WhatsApp groups & outdated notice boards. Hard to find reliable academic & campus info.</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm card-hover">
+            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center text-2xl mb-4">🤝</div>
+            <h3 class="font-bold text-lg mb-2">Isolation</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">Difficulty connecting with seniors, peers and mentors during the critical first months.</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm card-hover">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center text-2xl mb-4">🗺️</div>
+            <h3 class="font-bold text-lg mb-2">Campus Confusion</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">Unfamiliar with facilities, clubs, events, processes and even classroom locations.</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm card-hover">
+            <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center text-2xl mb-4">🎯</div>
+            <h3 class="font-bold text-lg mb-2">Career Uncertainty</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">Limited early guidance on placements, skills, coding resources and opportunities.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="features" class="bg-white border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+          <div class="text-center mb-12">
+            <p class="text-brand-600 font-semibold text-sm tracking-wider uppercase mb-2">Our Solution</p>
+            <h2 class="text-3xl font-bold">Three Pillars of Support</h2>
+          </div>
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center p-8 rounded-2xl bg-brand-50 border border-brand-100">
+              <div class="w-16 h-16 mx-auto rounded-2xl bg-brand-600 text-white flex items-center justify-center text-3xl mb-5 shadow-lg shadow-brand-600/30">📖</div>
+              <h3 class="text-xl font-bold mb-3">Inform</h3>
+              <p class="text-slate-600">Centralized knowledge base for academics, facilities map, clubs, events, FAQs and resources.</p>
+            </div>
+            <div class="text-center p-8 rounded-2xl bg-brand-50 border border-brand-100">
+              <div class="w-16 h-16 mx-auto rounded-2xl bg-brand-600 text-white flex items-center justify-center text-3xl mb-5 shadow-lg shadow-brand-600/30">🤝</div>
+              <h3 class="text-xl font-bold mb-3">Connect</h3>
+              <p class="text-slate-600">Smart mentorship matching with seniors, peer groups and interest-based communities.</p>
+            </div>
+            <div class="text-center p-8 rounded-2xl bg-brand-50 border border-brand-100">
+              <div class="w-16 h-16 mx-auto rounded-2xl bg-brand-600 text-white flex items-center justify-center text-3xl mb-5 shadow-lg shadow-brand-600/30">🚀</div>
+              <h3 class="text-xl font-bold mb-3">Empower</h3>
+              <p class="text-slate-600">Personalized roadmaps, skill recommendations and early placement readiness tools.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+        <div class="text-center mb-12">
+          <p class="text-brand-600 font-semibold text-sm tracking-wider uppercase mb-2">Key Features</p>
+          <h2 class="text-3xl font-bold">Everything a Fresher Needs</h2>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm card-hover">
+            <div class="w-11 h-11 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center text-xl mb-4">📱</div>
+            <h3 class="font-bold text-lg mb-2">Unified Campus Hub</h3>
+            <p class="text-slate-600 text-sm">One place for academics, map, clubs, events & FAQs.</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm card-hover">
+            <div class="w-11 h-11 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center text-xl mb-4">🧠</div>
+            <h3 class="font-bold text-lg mb-2">Smart Mentorship Match</h3>
+            <p class="text-slate-600 text-sm">AI-assisted pairing based on branch, interests & goals.</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm card-hover">
+            <div class="w-11 h-11 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center text-xl mb-4">🔔</div>
+            <h3 class="font-bold text-lg mb-2">Personalized Alerts</h3>
+            <p class="text-slate-600 text-sm">Deadlines, events, orientation & important notices.</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm card-hover">
+            <div class="w-11 h-11 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center text-xl mb-4">🛤️</div>
+            <h3 class="font-bold text-lg mb-2">Learning Pathways</h3>
+            <p class="text-slate-600 text-sm">Curated coding tracks & placement-prep roadmaps.</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm card-hover">
+            <div class="w-11 h-11 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center text-xl mb-4">💬</div>
+            <h3 class="font-bold text-lg mb-2">Peer Community</h3>
+            <p class="text-slate-600 text-sm">Interest groups, Q&A boards & anonymous doubts.</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm card-hover">
+            <div class="w-11 h-11 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center text-xl mb-4">🏆</div>
+            <h3 class="font-bold text-lg mb-2">Gamified Onboarding</h3>
+            <p class="text-slate-600 text-sm">Badges, challenges & rewards that encourage exploration.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-brand-600 text-white">
+        <div class="max-w-4xl mx-auto px-4 py-16 text-center">
+          <h2 class="text-3xl font-bold mb-4">Ready to thrive from day one?</h2>
+          <p class="text-brand-100 mb-8 text-lg">Join the pilot and experience a smoother, more confident start to college life.</p>
+          <button onclick="showPage('dashboard')" class="px-8 py-4 bg-white text-brand-700 font-bold rounded-xl hover:bg-brand-50 transition shadow-xl">
+            Get Started Free →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DASHBOARD ===== -->
+    <section id="page-dashboard" class="page hidden fade-in">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <div>
+            <p class="text-slate-500 text-sm">Good morning,</p>
+            <h1 class="text-2xl font-bold">Welcome back, Aarav 👋</h1>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-sm font-medium">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Day 12 of College
+            </div>
+            <div class="w-10 h-10 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold">A</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+            <p class="text-slate-500 text-sm mb-1">Onboarding Progress</p>
+            <p class="text-3xl font-bold text-brand-600">68%</p>
+            <div class="mt-2 h-2 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-brand-600 rounded-full" style="width:68%"></div>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+            <p class="text-slate-500 text-sm mb-1">Badges Earned</p>
+            <p class="text-3xl font-bold text-amber-500">5 <span class="text-base font-medium text-slate-400">/ 12</span></p>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+            <p class="text-slate-500 text-sm mb-1">Mentor Sessions</p>
+            <p class="text-3xl font-bold text-emerald-600">3</p>
+          </div>
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+            <p class="text-slate-500 text-sm mb-1">Events This Week</p>
+            <p class="text-3xl font-bold text-purple-600">4</p>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-6">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+              <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                <h2 class="font-bold text-lg">Personalized Alerts</h2>
+                <span class="text-xs font-semibold px-2 py-1 bg-red-100 text-red-600 rounded-full">3 new</span>
+              </div>
+              <div class="divide-y divide-slate-100">
+                <div class="px-6 py-4 flex gap-4 hover:bg-slate-50 transition">
+                  <div class="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center flex-shrink-0">⏰</div>
+                  <div>
+                    <p class="font-semibold text-sm">Fee Payment Deadline</p>
+                    <p class="text-slate-500 text-sm">Last date for semester fee is 18 Aug. Pay via portal to avoid late fine.</p>
+                    <p class="text-xs text-slate-400 mt-1">2 hours ago</p>
+                  </div>
+                </div>
+                <div class="px-6 py-4 flex gap-4 hover:bg-slate-50 transition">
+                  <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center flex-shrink-0">📅</div>
+                  <div>
+                    <p class="font-semibold text-sm">Orientation Session — CS Dept</p>
+                    <p class="text-slate-500 text-sm">Tomorrow 10:00 AM at Seminar Hall B. Attendance is mandatory.</p>
+                    <p class="text-xs text-slate-400 mt-1">Yesterday</p>
+                  </div>
+                </div>
+                <div class="px-6 py-4 flex gap-4 hover:bg-slate-50 transition">
+                  <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center flex-shrink-0">🏆</div>
+                  <div>
+                    <p class="font-semibold text-sm">New Badge Unlocked!</p>
+                    <p class="text-slate-500 text-sm">You earned "Campus Explorer" for visiting 5 key locations.</p>
+                    <p class="text-xs text-slate-400 mt-1">2 days ago</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+              <div class="px-6 py-4 border-b border-slate-100">
+                <h2 class="font-bold text-lg">Upcoming Events</h2>
+              </div>
+              <div class="p-4 grid sm:grid-cols-2 gap-3">
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                  <p class="text-xs font-semibold text-brand-600 mb-1">14 AUG · 5:00 PM</p>
+                  <p class="font-semibold">Coding Club Intro Meet</p>
+                  <p class="text-sm text-slate-500">Lab Complex · Room 204</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                  <p class="text-xs font-semibold text-brand-600 mb-1">16 AUG · 11:00 AM</p>
+                  <p class="font-semibold">Library Tour</p>
+                  <p class="text-sm text-slate-500">Central Library Entrance</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                  <p class="text-xs font-semibold text-brand-600 mb-1">17 AUG · 3:00 PM</p>
+                  <p class="font-semibold">Sports Trials — Football</p>
+                  <p class="text-sm text-slate-500">Main Ground</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                  <p class="text-xs font-semibold text-brand-600 mb-1">20 AUG · 9:30 AM</p>
+                  <p class="font-semibold">Branch Induction Ceremony</p>
+                  <p class="text-sm text-slate-500">Auditorium</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div class="bg-gradient-to-br from-brand-600 to-brand-800 text-white rounded-2xl p-6 shadow-lg">
+              <p class="text-brand-200 text-sm font-medium mb-3">Your Mentor</p>
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center text-2xl font-bold">R</div>
+                <div>
+                  <p class="font-bold text-lg">Riya Sharma</p>
+                  <p class="text-brand-200 text-sm">3rd Year · CSE · 8.9 CGPA</p>
+                </div>
+              </div>
+              <p class="text-sm text-brand-100 mb-4">"Happy to help with academics, coding interviews and campus life tips!"</p>
+              <button onclick="showPage('mentors')" class="w-full py-2.5 bg-white text-brand-700 font-semibold rounded-xl text-sm hover:bg-brand-50 transition">
+                Message Mentor
+              </button>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+              <h2 class="font-bold text-lg mb-4">Recent Badges</h2>
+              <div class="flex flex-wrap gap-3">
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-12 h-12 rounded-full bg-amber-100 text-2xl flex items-center justify-center badge-pop">🗺️</div>
+                  <span class="text-xs text-slate-500">Explorer</span>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-12 h-12 rounded-full bg-blue-100 text-2xl flex items-center justify-center">📚</div>
+                  <span class="text-xs text-slate-500">Scholar</span>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-12 h-12 rounded-full bg-emerald-100 text-2xl flex items-center justify-center">🤝</div>
+                  <span class="text-xs text-slate-500">Connector</span>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-12 h-12 rounded-full bg-purple-100 text-2xl flex items-center justify-center">💻</div>
+                  <span class="text-xs text-slate-500">Coder</span>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-12 h-12 rounded-full bg-pink-100 text-2xl flex items-center justify-center">⭐</div>
+                  <span class="text-xs text-slate-500">Early Bird</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+              <h2 class="font-bold text-lg mb-4">Quick Actions</h2>
+              <div class="space-y-2">
+                <button onclick="showPage('campus')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-brand-50 text-sm font-medium flex items-center gap-3 transition">
+                  <span class="text-lg">🗺️</span> Campus Map & Facilities
+                </button>
+                <button onclick="showPage('learn')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-brand-50 text-sm font-medium flex items-center gap-3 transition">
+                  <span class="text-lg">🛤️</span> My Learning Path
+                </button>
+                <button onclick="showPage('community')" class="w-full text-left px-4 py-3 rounded-xl hover:bg-brand-50 text-sm font-medium flex items-center gap-3 transition">
+                  <span class="text-lg">💬</span> Ask the Community
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MENTORS ===== -->
+    <section id="page-mentors" class="page hidden fade-in">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <div class="mb-8">
+          <h1 class="text-2xl font-bold mb-2">Smart Mentorship Matching</h1>
+          <p class="text-slate-600">Get paired with seniors based on branch, interests and goals. Or browse available mentors.</p>
+        </div>
+
+        <div class="bg-gradient-to-r from-brand-600 to-brand-800 text-white rounded-2xl p-6 sm:p-8 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold mb-1">Find your perfect mentor</h2>
+            <p class="text-brand-100 text-sm">Answer a few questions and we'll match you with the best senior for you.</p>
+          </div>
+          <button onclick="runMatch()" class="px-6 py-3 bg-white text-brand-700 font-bold rounded-xl text-sm whitespace-nowrap hover:bg-brand-50 transition">
+            Start Matching →
+          </button>
+        </div>
+
+        <div id="matchResult" class="hidden mb-8 fade-in">
+          <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-6">
+            <p class="text-emerald-700 font-semibold mb-3">✨ Best Match Found!</p>
+            <div class="flex flex-col sm:flex-row gap-4 items-start">
+              <div class="w-16 h-16 rounded-full bg-brand-600 text-white flex items-center justify-center text-2xl font-bold flex-shrink-0">R</div>
+              <div class="flex-1">
+                <p class="font-bold text-lg">Riya Sharma · 3rd Year CSE</p>
+                <p class="text-slate-600 text-sm mb-2">Interests: Competitive Programming, Web Dev, Placements</p>
+                <p class="text-sm text-slate-500 italic">"I've guided 12+ freshers last year. Happy to help with DSA, projects and campus life!"</p>
+                <div class="mt-3 flex gap-2 flex-wrap">
+                  <span class="px-2 py-1 bg-white text-xs font-medium rounded-full border">Match Score: 94%</span>
+                  <span class="px-2 py-1 bg-white text-xs font-medium rounded-full border">Same Branch</span>
+                  <span class="px-2 py-1 bg-white text-xs font-medium rounded-full border">Active Mentor</span>
+                </div>
+              </div>
+              <button class="px-5 py-2.5 bg-brand-600 text-white font-semibold rounded-xl text-sm hover:bg-brand-700 transition">Request Mentorship</button>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="font-bold text-lg mb-4">Available Mentors</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="mentorList"></div>
+      </div>
+    </section>
+
+    <!-- ===== CAMPUS HUB ===== -->
+    <section id="page-campus" class="page hidden fade-in">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <div class="mb-8">
+          <h1 class="text-2xl font-bold mb-2">Campus Hub</h1>
+          <p class="text-slate-600">Everything you need to know about facilities, clubs, academics and processes.</p>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-6 border-b border-slate-200 pb-3">
+          <button onclick="showCampusTab('facilities')" class="campus-tab active px-4 py-2 rounded-lg text-sm font-semibold bg-brand-600 text-white">Facilities</button>
+          <button onclick="showCampusTab('clubs')" class="campus-tab px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">Clubs</button>
+          <button onclick="showCampusTab('academics')" class="campus-tab px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">Academics</button>
+          <button onclick="showCampusTab('faqs')" class="campus-tab px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">FAQs</button>
+        </div>
+
+        <div id="campus-facilities" class="campus-panel">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm card-hover">
+              <div class="text-3xl mb-3">📚</div>
+              <h3 class="font-bold mb-1">Central Library</h3>
+              <p class="text-sm text-slate-500 mb-2">Open 8 AM – 10 PM · 3 floors · Digital resources</p>
+              <span class="text-xs font-medium text-brand-600">Near Admin Block</span>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm card-hover">
+              <div class="text-3xl mb-3">🍽️</div>
+              <h3 class="font-bold mb-1">Main Cafeteria</h3>
+              <p class="text-sm text-slate-500 mb-2">Breakfast, lunch & snacks · Meals from ₹40</p>
+              <span class="text-xs font-medium text-brand-600">Opposite Hostel Block A</span>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm card-hover">
+              <div class="text-3xl mb-3">💻</div>
+              <h3 class="font-bold mb-1">Computer Labs</h3>
+              <p class="text-sm text-slate-500 mb-2">200+ systems · Open 24×7 for final years</p>
+              <span class="text-xs font-medium text-brand-600">Lab Complex · Ground Floor</span>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm card-hover">
+              <div class="text-3xl mb-3">🏥</div>
+              <h3 class="font-bold mb-1">Health Centre</h3>
+              <p class="text-sm text-slate-500 mb-2">Doctor available 9 AM – 5 PM · Emergency 24×7</p>
+              <span class="text-xs font-medium text-brand-600">Near Sports Complex</span>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm card-hover">
+              <div class="text-3xl mb-3">🏋️</div>
+              <h3 class="font-bold mb-1">Sports Complex</h3>
+              <p class="text-sm text-slate-500 mb-2">Gym, courts, ground · Free for students</p>
+              <span class="text-xs font-medium text-brand-600">East Campus</span>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm card-hover">
+              <div class="text-3xl mb-3">🏦</div>
+              <h3 class="font-bold mb-1">Bank & ATM</h3>
+              <p class="text-sm text-slate-500 mb-2">SBI Branch + 2 ATMs on campus</p>
+              <span class="text-xs font-medium text-brand-600">Near Main Gate</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="campus-clubs" class="campus-panel hidden">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+              <h3 class="font-bold mb-1">Coding Club</h3>
+              <p class="text-sm text-slate-500 mb-3">Competitive programming, hackathons, workshops</p>
+              <button class="text-sm font-semibold text-brand-600 hover:underline">Join Club →</button>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+              <h3 class="font-bold mb-1">Robotics Society</h3>
+              <p class="text-sm text-slate-500 mb-3">Build bots, compete in national events</p>
+              <button class="text-sm font-semibold text-brand-600 hover:underline">Join Club →</button>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+              <h3 class="font-bold mb-1">Cultural Committee</h3>
+              <p class="text-sm text-slate-500 mb-3">Dance, music, drama, annual fest organisation</p>
+              <button class="text-sm font-semibold text-brand-600 hover:underline">Join Club →</button>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+              <h3 class="font-bold mb-1">E-Cell</h3>
+              <p class="text-sm text-slate-500 mb-3">Startups, entrepreneurship talks & incubators</p>
+              <button class="text-sm font-semibold text-brand-600 hover:underline">Join Club →</button>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+              <h3 class="font-bold mb-1">Photography Club</h3>
+              <p class="text-sm text-slate-500 mb-3">Campus shoots, workshops, photo walks</p>
+              <button class="text-sm font-semibold text-brand-600 hover:underline">Join Club →</button>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+              <h3 class="font-bold mb-1">Sports Council</h3>
+              <p class="text-sm text-slate-500 mb-3">Inter-college tournaments & intramurals</p>
+              <button class="text-sm font-semibold text-brand-600 hover:underline">Join Club →</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="campus-academics" class="campus-panel hidden">
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="p-6 space-y-4">
+              <div class="flex gap-4 p-4 rounded-xl bg-slate-50">
+                <div class="text-2xl">📋</div>
+                <div>
+                  <p class="font-semibold">Academic Calendar 2026-27</p>
+                  <p class="text-sm text-slate-500">Semester dates, holidays, exam schedule</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 rounded-xl bg-slate-50">
+                <div class="text-2xl">📝</div>
+                <div>
+                  <p class="font-semibold">Syllabus & Scheme</p>
+                  <p class="text-sm text-slate-500">Branch-wise syllabus, credit structure</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 rounded-xl bg-slate-50">
+                <div class="text-2xl">👨‍🏫</div>
+                <div>
+                  <p class="font-semibold">Faculty Directory</p>
+                  <p class="text-sm text-slate-500">Department-wise faculty contacts & cabin numbers</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 rounded-xl bg-slate-50">
+                <div class="text-2xl">📊</div>
+                <div>
+                  <p class="font-semibold">Attendance Rules</p>
+                  <p class="text-sm text-slate-500">Minimum 75% required · How to track & apply for leave</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="campus-faqs" class="campus-panel hidden">
+          <div class="space-y-3" id="faqList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LEARN ===== -->
+    <section id="page-learn" class="page hidden fade-in">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <div class="mb-8">
+          <h1 class="text-2xl font-bold mb-2">Learning Pathways</h1>
+          <p class="text-slate-600">Curated skill tracks and placement-prep roadmaps tailored for first-year students.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-5">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="font-bold text-lg">Your Active Path: CSE Fundamentals</h2>
+                <span class="text-sm font-semibold text-brand-600">42% complete</span>
+              </div>
+              <div class="h-3 bg-slate-100 rounded-full overflow-hidden mb-6">
+                <div class="h-full bg-brand-600 rounded-full" style="width:42%"></div>
+              </div>
+              <div class="space-y-3">
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-emerald-50 border border-emerald-100">
+                  <span class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-sm">✓</span>
+                  <div class="flex-1">
+                    <p class="font-medium text-sm">Introduction to Programming (C/Python)</p>
+                    <p class="text-xs text-slate-500">Completed · 8 modules</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-brand-50 border border-brand-100">
+                  <span class="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center text-sm font-bold">2</span>
+                  <div class="flex-1">
+                    <p class="font-medium text-sm">Data Structures Basics</p>
+                    <p class="text-xs text-slate-500">In progress · 3/10 modules</p>
+                  </div>
+                  <button class="text-xs font-semibold text-brand-600 px-3 py-1.5 bg-white rounded-lg border">Continue</button>
+                </div>
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 opacity-60">
+                  <span class="w-8 h-8 rounded-full bg-slate-300 text-white flex items-center justify-center text-sm font-bold">3</span>
+                  <div class="flex-1">
+                    <p class="font-medium text-sm">Web Development Intro</p>
+                    <p class="text-xs text-slate-500">Locked · Complete previous module</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 opacity-60">
+                  <span class="w-8 h-8 rounded-full bg-slate-300 text-white flex items-center justify-center text-sm font-bold">4</span>
+                  <div class="flex-1">
+                    <p class="font-medium text-sm">First Mini Project</p>
+                    <p class="text-xs text-slate-500">Locked</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+              <h2 class="font-bold text-lg mb-4">Recommended Tracks</h2>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div class="p-4 rounded-xl border border-slate-200 hover:border-brand-300 transition cursor-pointer">
+                  <p class="font-semibold mb-1">Placement Starter Kit</p>
+                  <p class="text-sm text-slate-500 mb-2">Resume, aptitude, basic DSA for Year 1</p>
+                  <span class="text-xs font-medium text-brand-600">12 modules · ~6 weeks</span>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 hover:border-brand-300 transition cursor-pointer">
+                  <p class="font-semibold mb-1">Open Source Beginner</p>
+                  <p class="text-sm text-slate-500 mb-2">Git, GitHub, first contribution</p>
+                  <span class="text-xs font-medium text-brand-600">8 modules · ~3 weeks</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-5">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+              <h2 class="font-bold text-lg mb-4">Resources</h2>
+              <ul class="space-y-3 text-sm">
+                <li class="flex items-center gap-2"><span class="text-brand-600">→</span> FreeCodeCamp – Responsive Web</li>
+                <li class="flex items-center gap-2"><span class="text-brand-600">→</span> GeeksforGeeks – DSA Sheet</li>
+                <li class="flex items-center gap-2"><span class="text-brand-600">→</span> CS50 – Intro to CS (Harvard)</li>
+                <li class="flex items-center gap-2"><span class="text-brand-600">→</span> College LMS – Lecture Notes</li>
+                <li class="flex items-center gap-2"><span class="text-brand-600">→</span> Official Python Docs</li>
+              </ul>
+            </div>
+            <div class="bg-brand-50 rounded-2xl border border-brand-100 p-6">
+              <h2 class="font-bold text-lg mb-2">💡 Tip</h2>
+              <p class="text-sm text-slate-600">Spend 45–60 mins daily on your learning path. Consistency beats intensity in the first year.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== COMMUNITY ===== -->
+    <section id="page-community" class="page hidden fade-in">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        <div class="mb-8">
+          <h1 class="text-2xl font-bold mb-2">Peer Community</h1>
+          <p class="text-slate-600">Ask questions, share tips, and connect with other freshers and seniors.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 mb-5">
+              <textarea id="postInput" rows="2" placeholder="Ask a question or share something with the community..." class="w-full text-sm border-0 focus:ring-0 resize-none outline-none"></textarea>
+              <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-100">
+                <div class="flex gap-2 flex-wrap">
+                  <button class="text-xs px-3 py-1.5 rounded-full bg-slate-100 font-medium">Academics</button>
+                  <button class="text-xs px-3 py-1.5 rounded-full bg-slate-100 font-medium">Campus Life</button>
+                  <button class="text-xs px-3 py-1.5 rounded-full bg-slate-100 font-medium">Anonymous</button>
+                </div>
+                <button onclick="addPost()" class="px-4 py-2 bg-brand-600 text-white text-sm font-semibold rounded-xl hover:bg-brand-700 transition">Post</button>
+              </div>
+            </div>
+
+            <div id="postsList" class="space-y-4"></div>
+          </div>
+
+          <div class="space-y-5">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+              <h2 class="font-bold mb-3">Interest Groups</h2>
+              <div class="space-y-2">
+                <div class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50">
+                  <span class="text-sm font-medium">💻 Competitive Coding</span>
+                  <span class="text-xs text-slate-400">128</span>
+                </div>
+                <div class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50">
+                  <span class="text-sm font-medium">🎨 Design & UI/UX</span>
+                  <span class="text-xs text-slate-400">64</span>
+                </div>
+                <div class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50">
+                  <span class="text-sm font-medium">🏀 Sports & Fitness</span>
+                  <span class="text-xs text-slate-400">97</span>
+                </div>
+                <div class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50">
+                  <span class="text-sm font-medium">🚀 Startups</span>
+                  <span class="text-xs text-slate-400">41</span>
+                </div>
+                <div class="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50">
+                  <span class="text-sm font-medium">🎵 Music & Arts</span>
+                  <span class="text-xs text-slate-400">73</span>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+              <h2 class="font-bold mb-3">Community Guidelines</h2>
+              <ul class="text-sm text-slate-600 space-y-2">
+                <li>• Be respectful and helpful</li>
+                <li>• No spam or self-promotion</li>
+                <li>• Use Anonymous for sensitive topics</li>
+                <li>• Report inappropriate content</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-slate-900 text-slate-400 py-10 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-brand-600 text-white flex items-center justify-center font-bold text-sm">FC</div>
+        <span class="text-white font-semibold">Freshers' Companion</span>
+      </div>
+      <p class="text-sm">Built for the Innovation & Solution Track · PPT Round Prototype</p>
+      <p class="text-sm">Help every fresher feel informed, connected & confident.</p>
+    </div>
+  </footer>
+
+  <script>
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+      const page = document.getElementById('page-' + id);
+      if (page) {
+        page.classList.remove('hidden');
+        page.classList.add('fade-in');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    }
+
+    function showCampusTab(tab) {
+      document.querySelectorAll('.campus-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById('campus-' + tab).classList.remove('hidden');
+      document.querySelectorAll('.campus-tab').forEach(b => {
+        b.classList.remove('active', 'bg-brand-600', 'text-white', 'font-semibold');
+        b.classList.add('text-slate-600', 'font-medium');
+      });
+      if (event && event.target) {
+        event.target.classList.add('active', 'bg-brand-600', 'text-white', 'font-semibold');
+        event.target.classList.remove('text-slate-600', 'font-medium');
+      }
+    }
+
+    const mentors = [
+      { name: 'Riya Sharma', year: '3rd Year', branch: 'CSE', cgpa: '8.9', interests: 'CP, Web Dev, Placements', bio: 'Guided 12+ freshers. Happy to help with DSA & campus life!', color: 'bg-brand-600' },
+      { name: 'Arjun Mehta', year: '4th Year', branch: 'ECE', cgpa: '9.1', interests: 'Embedded, IoT, Core', bio: 'Core company intern. Can help with electronics projects.', color: 'bg-emerald-600' },
+      { name: 'Sneha Patel', year: '3rd Year', branch: 'CSE', cgpa: '8.7', interests: 'UI/UX, Frontend', bio: 'Design systems & React. Love mentoring design-curious students.', color: 'bg-purple-600' },
+      { name: 'Karan Singh', year: '4th Year', branch: 'ME', cgpa: '8.5', interests: 'CAD, Robotics', bio: 'Robotics club lead. Open for mechanical & project guidance.', color: 'bg-amber-600' },
+      { name: 'Ananya Gupta', year: '3rd Year', branch: 'IT', cgpa: '9.0', interests: 'Data Science, ML', bio: 'Kaggle notebooks & research. Great for DS beginners.', color: 'bg-pink-600' },
+      { name: 'Vikram Rao', year: '4th Year', branch: 'CSE', cgpa: '8.8', interests: 'System Design, GSoC', bio: 'GSoC 2025. Happy to talk open source & interviews.', color: 'bg-cyan-600' },
+    ];
+
+    function renderMentors() {
+      const list = document.getElementById('mentorList');
+      if (!list) return;
+      list.innerHTML = mentors.map(m => `
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 card-hover">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-12 h-12 rounded-full ${m.color} text-white flex items-center justify-center font-bold text-lg">${m.name[0]}</div>
+            <div>
+              <p class="font-bold">${m.name}</p>
+              <p class="text-xs text-slate-500">${m.year} · ${m.branch} · ${m.cgpa} CGPA</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-600 mb-2">${m.bio}</p>
+          <p class="text-xs text-slate-400 mb-3">Interests: ${m.interests}</p>
+          <button class="w-full py-2 text-sm font-semibold text-brand-600 border border-brand-200 rounded-xl hover:bg-brand-50 transition">Request Mentorship</button>
+        </div>
+      `).join('');
+    }
+
+    function runMatch() {
+      const el = document.getElementById('matchResult');
+      el.classList.remove('hidden');
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    const faqs = [
+      { q: 'How do I get my student ID card?', a: 'Visit the Admin Office with your admission letter and 2 passport photos within the first week. Timing: 10 AM – 4 PM.' },
+      { q: 'What is the minimum attendance requirement?', a: '75% overall. Below this you may be debarred from exams. Track attendance on the college ERP portal.' },
+      { q: 'How can I join clubs?', a: 'Most clubs open registration in the first 2–3 weeks. Check the Clubs tab here or notice boards near the amphitheatre.' },
+      { q: 'Where can I get study material for first semester?', a: 'College LMS, seniors’ shared drives (ask your mentor), and the Learning Pathways section in this app.' },
+      { q: 'Is there a late fee for hostel payment?', a: 'Yes, ₹50/day after the due date. Check the Alerts section for exact deadlines.' },
+    ];
+
+    function renderFaqs() {
+      const list = document.getElementById('faqList');
+      if (!list) return;
+      list.innerHTML = faqs.map((f, i) => `
+        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <button onclick="toggleFaq(${i})" class="w-full text-left px-5 py-4 flex items-center justify-between font-medium text-sm hover:bg-slate-50">
+            ${f.q}
+            <span id="faq-icon-${i}" class="text-slate-400">+</span>
+          </button>
+          <div id="faq-ans-${i}" class="hidden px-5 pb-4 text-sm text-slate-600">${f.a}</div>
+        </div>
+      `).join('');
+    }
+
+    function toggleFaq(i) {
+      const ans = document.getElementById('faq-ans-' + i);
+      const icon = document.getElementById('faq-icon-' + i);
+      ans.classList.toggle('hidden');
+      icon.textContent = ans.classList.contains('hidden') ? '+' : '−';
+    }
+
+    let posts = [
+      { author: 'Priya K.', time: '2h ago', tag: 'Academics', text: 'Does anyone have the timetable for CSE 1st year? The one on the notice board is blurry 😅', replies: 5 },
+      { author: 'Anonymous', time: '5h ago', tag: 'Campus Life', text: 'Feeling a bit overwhelmed in the first week. Any tips from seniors on how to settle in?', replies: 12 },
+      { author: 'Rohit M.', time: '1d ago', tag: 'Academics', text: 'Which programming language should we focus on in Year 1 — C or Python?', replies: 8 },
+      { author: 'Sneha', time: '1d ago', tag: 'Clubs', text: 'Coding Club is holding an intro session this Thursday. Highly recommend for freshers!', replies: 3 },
+    ];
+
+    function renderPosts() {
+      const list = document.getElementById('postsList');
+      if (!list) return;
+      list.innerHTML = posts.map(p => `
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">${p.author[0]}</div>
+            <span class="font-semibold text-sm">${p.author}</span>
+            <span class="text-xs text-slate-400">· ${p.time}</span>
+            <span class="ml-auto text-xs px-2 py-0.5 bg-brand-50 text-brand-600 rounded-full font-medium">${p.tag}</span>
+          </div>
+          <p class="text-sm text-slate-700 mb-3">${p.text}</p>
+          <div class="flex items-center gap-4 text-xs text-slate-500">
+            <button class="hover:text-brand-600">💬 ${p.replies} replies</button>
+            <button class="hover:text-brand-600">👍 Helpful</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addPost() {
+      const input = document.getElementById('postInput');
+      const text = input.value.trim();
+      if (!text) return;
+      posts.unshift({ author: 'You', time: 'Just now', tag: 'General', text, replies: 0 });
+      input.value = '';
+      renderPosts();
+    }
+
+    renderMentors();
+    renderFaqs();
+    renderPosts();
+    showPage('home');
+  </script>
+</body>
+</html>
